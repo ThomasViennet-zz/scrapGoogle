@@ -10,7 +10,6 @@ console.log('Navigateur ouvert');
 await page.goto('https://www.google.com/');
 await page.waitForSelector('#L2AGLb > div');
 await page.click('#L2AGLb > div');
-// await page.waitFor(1000);
 console.log('Début du scrap');
 
 let random = Math.round(Math.random() * (150 - 50) + 50);
@@ -44,7 +43,6 @@ var queries = ['query'];
     console.log(random);
     if(i === random)
     {
-
       console.log('Pause suppélmentaire de ' + wait/1000 + ' secondes');
       random = random + Math.round(Math.random() * (150 - 50) + 50);
       await page.waitForTimeout(wait*2);
