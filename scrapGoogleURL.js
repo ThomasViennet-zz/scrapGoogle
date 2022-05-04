@@ -7,23 +7,22 @@ const navigationPromise = page.waitForNavigation();
 // await page.setViewport({ width: 2000, height: 836 });
 console.log('Navigateur ouvert');
 
-let serpAll = [];
-
 await page.goto('https://www.google.com/');
 await page.waitForSelector('#L2AGLb > div');
 await page.click('#L2AGLb > div');
 // await page.waitFor(1000);
 console.log('Début du scrap');
 
-var queries = ['casaque', 'blouse de travail'];
+let random = Math.round(Math.random() * (150 - 50) + 50);
 
+let serpAll = [];
+var queries = ['query'];
 
   for (let query of queries){
     await page.goto('https://www.google.com/search?q=' + query + '');
     let wait = (Math.floor(Math.random() * 4) + 2) * 1000;
     console.log('Pause de ' + wait/1000 + ' secondes');
     await page.waitForTimeout(wait);
-
 
     let serp = await page.evaluate(() => {
         let data = [];
@@ -34,19 +33,21 @@ var queries = ['casaque', 'blouse de travail'];
           let titleClean = title.replaceAll(',','');
           data.push(titleClean);
         }
-
         return data;
     })
     console.log(serp);
 
     serpAll.push(query + "," + serp);
-    i = queries.indexOf(query);
+    let i = queries.indexOf(query);
     i++;
     console.log('Scrap de "' + query + '" [' + i  + '/' + queries.length + ']');
-    if(Number.isInteger(i/100))
+    console.log(random);
+    if(i === random)
     {
+
       console.log('Pause suppélmentaire de ' + wait/1000 + ' secondes');
-      await page.waitForTimeout(wait);
+      random = random + Math.round(Math.random() * (150 - 50) + 50);
+      await page.waitForTimeout(wait*2);
     }
   }
 console.log('Fin du scrap');
